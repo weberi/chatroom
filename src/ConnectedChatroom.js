@@ -83,11 +83,11 @@ export default class ConnectedChatroom extends Component<
     }
   }
 
-  sendMessage = async (messageText: string) => {
+  sendMessage = async (messageText: string, buttonTitle: string ) => {
     if (messageText === "") return;
 
     const messageObj = {
-      message: { type: "text", text: messageText },
+      message: { type: "text", text:  (buttonTitle != "") ? buttonTitle : messageText },
       time: Date.now(),
       username: this.props.userId,
       uuid: uuidv4()
@@ -99,7 +99,7 @@ export default class ConnectedChatroom extends Component<
         messages: [
           ...this.state.messages,
           ...this.state.messageQueue,
-          messageObj
+          messageObj                
         ],
         messageQueue: []
       });
@@ -114,7 +114,8 @@ export default class ConnectedChatroom extends Component<
     }, this.props.waitingTimeout);
 
     const rasaMessageObj = {
-      message: messageObj.message.text,
+      // message: messageObj.message.text,   
+      message: messageText,
       sender: this.props.userId
     };
 
@@ -137,7 +138,7 @@ export default class ConnectedChatroom extends Component<
     if (window.ga != null) {
       window.ga("send", "event", "chat", "chat-message-sent");
     }
-  };
+  }; 
 
   createNewBotMessage(botMessageObj: MessageType): ChatMessage {
     return {
@@ -214,7 +215,7 @@ export default class ConnectedChatroom extends Component<
   };
 
   handleButtonClick = (buttonTitle: string, payload: string) => {
-    this.sendMessage(payload);
+    this.sendMessage(payload, buttonTitle);
     if (window.ga != null) {
       window.ga("send", "event", "chat", "chat-button-click");
     }
