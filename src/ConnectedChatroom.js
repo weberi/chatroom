@@ -84,10 +84,9 @@ export default class ConnectedChatroom extends Component<
   }
 
   sendMessage = async (messageText: string, buttonTitle: string ) => {
-    if (messageText === "") return;
-
+    if (messageText === "" && buttonTitle === "" ) return;
     const messageObj = {
-      message: { type: "text", text:  (buttonTitle != "") ? buttonTitle : messageText },
+      message: { type: "text", text:  (buttonTitle && buttonTitle.length > 0 ) ? buttonTitle: messageText },
       time: Date.now(),
       username: this.props.userId,
       uuid: uuidv4()
@@ -99,7 +98,7 @@ export default class ConnectedChatroom extends Component<
         messages: [
           ...this.state.messages,
           ...this.state.messageQueue,
-          messageObj                
+          messageObj
         ],
         messageQueue: []
       });
@@ -114,8 +113,7 @@ export default class ConnectedChatroom extends Component<
     }, this.props.waitingTimeout);
 
     const rasaMessageObj = {
-      // message: messageObj.message.text,   
-      message: messageText,
+      message: messageObj.message.text,
       sender: this.props.userId
     };
 
