@@ -1,4 +1,4 @@
-// @flow
+/*  @flow   */
 import "@babel/polyfill";
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
@@ -6,7 +6,7 @@ import isEqual from "lodash.isequal";
 import classnames from "classnames";
 
 // $FlowFixMe
-import "./Chatroom.scss";
+import "./Chatroom.css";
 
 import { uuidv4 } from "./utils";
 import Message, { MessageTime } from "./Message";
@@ -238,3 +238,4 @@ export default class Chatroom extends Component<ChatroomProps, ChatroomState> {
     );
   }
 }
+//# sourceMappingURL=./Chatroom.js.map

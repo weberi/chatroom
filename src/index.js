@@ -17,6 +17,11 @@ type ChatroomOptions = {
   host: string,
   title?: string,
   welcomeMessage?: string,
+  welcomeButtons?: Array<{
+    payload: string,
+    title: string,
+    selected?: boolean
+  }>,
   speechRecognition?: string,
   startMessage?: string,
   container: HTMLElement,
@@ -43,6 +48,7 @@ window.Chatroom = function(options: ChatroomOptions) {
       title={options.title || "Chat"}
       speechRecognition={options.speechRecognition}
       welcomeMessage={options.welcomeMessage}
+      welcomeButtons={options.welcomeButtons}
       waitingTimeout={options.waitingTimeout}
       fetchOptions={options.fetchOptions}
       voiceLang={options.voiceLang}
@@ -209,6 +215,7 @@ window.DebugChatroom = function(options: ChatroomOptions) {
       title={options.title || "Chat"}
       speechRecognition={options.speechRecognition}
       welcomeMessage={options.welcomeMessage}
+      welcomeButtons={options.welcomeButtons}
       waitingTimeout={options.waitingTimeout}
       fetchOptions={options.fetchOptions}
       voiceLang={options.voiceLang}

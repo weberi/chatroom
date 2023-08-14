@@ -10,6 +10,7 @@ type ConnectedChatroomProps = {
   userId: string,
   host: string,
   welcomeMessage: ?string,
+  welcomeButtons: Array<{ payload: string, title: string, selected?: boolean }>,
   title: string,
   waitingTimeout: number,
   speechRecognition: ?string,
@@ -60,16 +61,41 @@ export default class ConnectedChatroom extends Component<
       this.queuedMessagesInterval,
       messageDelay
     );
+    console.log("logme");
+    console.log(this.props.welcomeButtons);
+    if (this.props.welcomeButtons)
+      console.log(this.props.welcomeButtons.length > 0);
+    let AllWelcomeMessages = [];
 
     if (this.props.welcomeMessage) {
+      console.log("welcomeMessage   " + this.props.welcomeMessage);
       const welcomeMessage = {
         message: { type: "text", text: this.props.welcomeMessage },
         time: Date.now(),
         username: "bot",
         uuid: uuidv4()
       };
-      this.setState({ messages: [welcomeMessage] });
+      console.log("StateButtons");
+      AllWelcomeMessages.push(welcomeMessage);
+      /* this.setState({ messages: [welcomeMessage] });  */
     }
+
+    if (this.props.welcomeButtons && this.props.welcomeButtons.length > 0) {
+      console.log("Buttons...");
+      console.log("welcomeMessage and Buttons  " + this.props.welcomeMessage);
+
+      const welcomeButtonMessage = {
+        message: { type: "button", buttons: this.props.welcomeButtons },
+        time: Date.now(),
+        username: "bot",
+        uuid: uuidv4()
+      };
+      console.log("StateButtons");
+      AllWelcomeMessages.push(welcomeButtonMessage);
+      /*  this.setState({ messages: [welcomeButtonMessage] });  */
+    }
+
+    this.setState({ messages: AllWelcomeMessages });
   }
 
   componentWillUnmount() {
@@ -83,10 +109,13 @@ export default class ConnectedChatroom extends Component<
     }
   }
 
-  sendMessage = async (messageText: string, buttonTitle: string ) => {
-    if (messageText === "" && buttonTitle === "" ) return;
+  sendMessage = async (messageText: string, buttonTitle: string) => {
+    if (messageText === "" && buttonTitle === "") return;
     const messageObj = {
-      message: { type: "text", text:  (buttonTitle && buttonTitle.length > 0 ) ? buttonTitle: messageText },
+      message: {
+        type: "text",
+        text: buttonTitle && buttonTitle.length > 0 ? buttonTitle : messageText
+      },
       time: Date.now(),
       username: this.props.userId,
       uuid: uuidv4()
@@ -117,13 +146,17 @@ export default class ConnectedChatroom extends Component<
       sender: this.props.userId
     };
 
-    const fetchOptions = Object.assign({}, {
-      method: "POST",
-      body: JSON.stringify(rasaMessageObj),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }, this.props.fetchOptions);
+    const fetchOptions = Object.assign(
+      {},
+      {
+        method: "POST",
+        body: JSON.stringify(rasaMessageObj),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      },
+      this.props.fetchOptions
+    );
 
     const response = await fetch(
       `${this.props.host}/webhooks/rest/webhook`,
@@ -136,7 +169,7 @@ export default class ConnectedChatroom extends Component<
     if (window.ga != null) {
       window.ga("send", "event", "chat", "chat-message-sent");
     }
-  }; 
+  };
 
   createNewBotMessage(botMessageObj: MessageType): ChatMessage {
     return {

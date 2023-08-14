@@ -1,0 +1,25 @@
+:root {
+  /* calm theme */
+
+  --main-color: rgb(8, 58, 104);
+  --sec-color: rgb(133, 173, 211);
+  --back-color: #ffff; /* rgba(133, 173, 211, 0.3);  */
+  --ovality: 0pt;
+}
+
+.chatroom .chats .chat.left {
+  border-left: 2pt solid var(--sec-color);
+  border-bottom: 1pt solid var(--sec-color);
+  border-right: 0pt solid var(--back-color);
+  border-top: 0pt solid var(--back-color);
+  border-bottom-left-radius: 0;
+}
+.chatroom .chats .chat.right {
+  float: right;
+  clear: both;
+  border-bottom-right-radius: 0;
+  border-right: 2pt solid var(--sec-color);
+  border-left: 0pt solid var(--back-color);
+  border-top: 0pt solid var(--back-color);
+  border-bottom: 1pt solid var(--sec-color);
+}

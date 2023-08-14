@@ -1,5 +1,6 @@
 .cache
 node_modules
+jnk
 yarn-error.log
 __pycache__
 .vscode
