@@ -17,12 +17,12 @@
   letter-spacing: normal;
   margin: 0pt;
   overflow: hidden;
-  box-shadow: 0 0 0 3px rgba(215, 215, 215, 0.8);
 }
 
 .chatroom,
 .chatroom * {
   box-sizing: border-box;
+  border-radius: var(--ovality); 
 }
 .chatroom.closed {
   height: 40px;
