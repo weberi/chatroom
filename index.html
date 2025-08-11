@@ -3,30 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.statically.io/gh/weberi/chatroom/master/dist/Chatroom.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.statically.io/gh/weberi/chatroom/master/index.css"
-    />
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/weberi/chatroom/master/themes/theme3.css" /> -->
+
+    <!-- Chatroom styles from jsDelivr (GitHub CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/weberi/chatroom@master/dist/Chatroom.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/weberi/chatroom@master/index.css" />
+    <!-- Optional theme
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/weberi/chatroom@master/themes/theme3.css" />
+    -->
   </head>
   <body>
     <div class="chat-container"></div>
-    <script src="https://cdn.statically.io/gh/weberi/chatroom/master/dist/Chatroom.js"></script>
 
-    <script type="text/javascript">
-      var chatroom = new window.Chatroom({
-        host: "http://localhost:5005",
+    <!-- Chatroom script from jsDelivr (load before you call new Chatroom) -->
+    <script src="https://cdn.jsdelivr.net/gh/weberi/chatroom@master/dist/Chatroom.js"></script>
+
+    <script>
+      const chatroom = new window.Chatroom({
+        host: "http://localhost:5005",  // see HTTPS note below
         title: "Chat with a Bot",
         container: document.querySelector(".chat-container"),
         welcomeMessage: "Hi, I am a Bot. How may I help you?",
         welcomeButtons: [
-          { title: "Hello", payload: "\greet" },
-          { title: "GoodBye", payload: "\goodbye" }
+          { title: "Hello",    payload: "/greet"   },  // use /greet not \greet
+          { title: "GoodBye",  payload: "/goodbye" }
         ],
         speechRecognition: "en-US",
         voiceLang: "en-US"
